@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { CodeEditor } from "./components/code-editor";
 
 function App() {
-    return <></>;
+    return (
+        <main>
+            <CodeEditor />
+        </main>
+    );
 }
 
 export default App;
