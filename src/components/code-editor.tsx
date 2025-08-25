@@ -9,15 +9,23 @@ export const CodeEditor = () => {
     const [success, setSuccess] = useState(false);
     const [code, setCode] = useState<string>(problem.startingCode ?? "");
     const [output, setOutput] = useState("");
+    const [problemsSolved, setProblemsSolved] = useState(0);
 
-    const loadNewProblem = () => {
+    const loadNewProblem = (forceNewProblem?: boolean) => {
         const newProblem = getRandomProblem();
+        if (forceNewProblem) {
+            setProblem(newProblem);
+            setCode(newProblem.startingCode ?? "");
+            setOutput("");
+            return;
+        }
+        setProblemsSolved(problemsSolved + 1);
         setTimeout(() => {
             setProblem(newProblem);
             setCode(newProblem.startingCode ?? "");
             setOutput("");
             setSuccess(false);
-        }, 3000);
+        }, 5000);
     };
 
     const runCode = (src: string) => {
@@ -45,25 +53,42 @@ export const CodeEditor = () => {
         }
     };
 
-    return (
-        <div className="editor-container">
-            <div className="header">
-                <h1>{problem.title}</h1>
-                <p>{problem.description}</p>
-                {success && <p>Done!</p>}
-            </div>
-            <div className="editor">
-                <Editor
-                    defaultLanguage="typescript"
-                    value={code}
-                    onChange={(value) => {
-                        setCode(value ?? "");
-                        runCode(value ?? "");
-                    }}
-                />
-            </div>
+    const renderContent = () => {
+        if (problemsSolved === 4) {
+            return (
+                <div>
+                    <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
+                    <p>You have solved all the problems!</p>
+                </div>
+            );
+        }
+        return (
+            <>
+                <div className="header">
+                    <h1>{problem.title}</h1>
+                    <p>{problem.description}</p>
+                    <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
+                    {success && <p>Done!</p>}
+                </div>
+                <div className="editor-container">
+                    <div className="editor">
+                        <Editor
+                            defaultLanguage="typescript"
+                            value={code}
+                            onChange={(value) => {
+                                setCode(value ?? "");
+                                runCode(value ?? "");
+                            }}
+                        />
+                    </div>
+                    <button onClick={() => loadNewProblem(true)}>
+                        NEW PROBLEM
+                    </button>
+                    <div className="output-container">{output}</div>
+                </div>
+            </>
+        );
+    };
 
-            <div className="output-container">{output}</div>
-        </div>
-    );
+    return <div className="page-container">{renderContent()}</div>;
 };

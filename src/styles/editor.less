@@ -1,11 +1,27 @@
 
-.editor-container {
+.page-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
     flex-direction: column;
+
+    .editor-container {
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+            padding: 16px 18px;
+            border: 1px solid grey;
+            outline: none;
+            background: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    }
 
     p {
         margin: 0;
@@ -18,8 +34,8 @@
     }
 
     .editor {
-        width: 800px;
-        height: 600px;
+        width: 600px;
+        height: 400px;
     }
 
     .output-container {
