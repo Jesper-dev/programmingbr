@@ -54,7 +54,7 @@ export const CodeEditor = () => {
     };
 
     const renderContent = () => {
-        if (problemsSolved === 4) {
+        if (problemsSolved === 10) {
             return (
                 <div>
                     <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
