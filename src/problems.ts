@@ -18,18 +18,6 @@ const problems: Problem[] = [
         startingCode: "const array = [1, 7, 4, 9]",
     },
     {
-        title: "Get the key",
-        description: "Write out the value of key1, as fast as possible",
-        endResult: "gz",
-        startingCode: `
-const object = {
-    key2: "not this one",
-    key5: "nope",
-    key1: "gz",
-    key3: "oops"
-}`,
-    },
-    {
         title: "Reverse a string",
         description: "Reverse the string 'hello' so it becomes 'olleh'",
         endResult: "olleh",

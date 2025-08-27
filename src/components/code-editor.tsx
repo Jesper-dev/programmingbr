@@ -20,12 +20,10 @@ export const CodeEditor = () => {
             return;
         }
         setProblemsSolved(problemsSolved + 1);
-        setTimeout(() => {
-            setProblem(newProblem);
-            setCode(newProblem.startingCode ?? "");
-            setOutput("");
-            setSuccess(false);
-        }, 5000);
+        setProblem(newProblem);
+        setCode(newProblem.startingCode ?? "");
+        setOutput("");
+        setSuccess(false);
     };
 
     const runCode = (src: string) => {
