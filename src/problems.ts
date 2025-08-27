@@ -71,5 +71,6 @@ const problems: Problem[] = [
 
 export const getRandomProblem = (): Problem => {
     const index = Math.floor(Math.random() * problems.length);
-    return problems[index];
+    const chosenProblem = problems[index];
+    return chosenProblem;
 };

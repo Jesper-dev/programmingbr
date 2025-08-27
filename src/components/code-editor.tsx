@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import "../styles/editor.less";
 import { getRandomProblem } from "../problems";
@@ -10,6 +10,15 @@ export const CodeEditor = () => {
     const [code, setCode] = useState<string>(problem.startingCode ?? "");
     const [output, setOutput] = useState("");
     const [problemsSolved, setProblemsSolved] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(60);
+
+    useEffect(() => {
+        if (timeLeft <= 0) return;
+        const intervalId = setInterval(() => {
+            setTimeLeft((prev) => prev - 1);
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, [timeLeft]);
 
     const loadNewProblem = (forceNewProblem?: boolean) => {
         const newProblem = getRandomProblem();
@@ -52,6 +61,9 @@ export const CodeEditor = () => {
     };
 
     const renderContent = () => {
+        if (timeLeft <= 0) {
+            return <p>You have lost!</p>;
+        }
         if (problemsSolved === 10) {
             return (
                 <div>
@@ -63,6 +75,7 @@ export const CodeEditor = () => {
         return (
             <>
                 <div className="header">
+                    <p>Time left: {timeLeft}</p>
                     <h1>{problem.title}</h1>
                     <p>{problem.description}</p>
                     <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
