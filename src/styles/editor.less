@@ -6,13 +6,26 @@
     align-items: center;
     flex-direction: column;
 
+    .times-up-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        p {
+            font-size: 20px;
+            text-decoration: underline;
+        }
+    }
+
     .editor-container {
         gap: 20px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: center;        
+    }
 
-        button {
+    button {
             padding: 16px 18px;
             border: 1px solid grey;
             outline: none;
@@ -21,7 +34,6 @@
             border-radius: 8px;
             cursor: pointer;
         }
-    }
 
     p {
         margin: 0;
@@ -31,6 +43,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .time-points-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
     }
 
     .editor {

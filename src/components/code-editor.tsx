@@ -9,8 +9,8 @@ export const CodeEditor = () => {
     const [success, setSuccess] = useState(false);
     const [code, setCode] = useState<string>(problem.startingCode ?? "");
     const [output, setOutput] = useState("");
-    const [problemsSolved, setProblemsSolved] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(60);
+    const [score, setScore] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(120);
 
     useEffect(() => {
         if (timeLeft <= 0) return;
@@ -20,6 +20,12 @@ export const CodeEditor = () => {
         return () => clearInterval(intervalId);
     }, [timeLeft]);
 
+    const restartGame = () => {
+        setTimeLeft(120);
+        setScore(0);
+        loadNewProblem();
+    };
+
     const loadNewProblem = (forceNewProblem?: boolean) => {
         const newProblem = getRandomProblem();
         if (forceNewProblem) {
@@ -28,7 +34,6 @@ export const CodeEditor = () => {
             setOutput("");
             return;
         }
-        setProblemsSolved(problemsSolved + 1);
         setProblem(newProblem);
         setCode(newProblem.startingCode ?? "");
         setOutput("");
@@ -53,6 +58,7 @@ export const CodeEditor = () => {
 
             if (isSuccess) {
                 setSuccess(true);
+                setScore(score + 10);
                 loadNewProblem();
             }
         } catch (error: any) {
@@ -61,24 +67,29 @@ export const CodeEditor = () => {
     };
 
     const renderContent = () => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
         if (timeLeft <= 0) {
-            return <p>You have lost!</p>;
-        }
-        if (problemsSolved === 10) {
             return (
-                <div>
-                    <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
-                    <p>You have solved all the problems!</p>
+                <div className="times-up-container">
+                    <h1>Times up!</h1>
+                    <p>Final score: {score}</p>
+                    <button onClick={restartGame}>Play again</button>
                 </div>
             );
         }
+
         return (
             <>
                 <div className="header">
-                    <p>Time left: {timeLeft}</p>
-                    <h1>{problem.title}</h1>
+                    <div className="time-points-container">
+                        <p>Time left: {formattedTime}</p>
+                        <p>Score: {score}</p>
+                    </div>
+                    <h1 className="problem-title">{problem.title}</h1>
                     <p>{problem.description}</p>
-                    <h2>{`Problems solved: ${problemsSolved}/10`}</h2>
                     {success && <p>Done!</p>}
                 </div>
                 <div className="editor-container">
